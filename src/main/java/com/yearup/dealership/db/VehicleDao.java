@@ -48,14 +48,37 @@ public class VehicleDao {
 
 
     public List<Vehicle> searchByPriceRange(double minPrice, double maxPrice) {
-    
+
+        String sql = "SELECT * FROM vehicles WHERE price BETWEEN ? AND ?";
+        List<Vehicle> vehicles = new ArrayList<>();
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setDouble(1, minPrice);
+            statement.setDouble(2, maxPrice);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    vehicles.add(createVehicleFromResultSet(resultSet));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return vehicles;
+        }
+
+
+
+    public List<Vehicle> searchByMakeModel(String make, String model) {
+
             List<Vehicle> vehicles = new ArrayList<>();
-            String sql = "SELECT * FROM vehicles WHERE price BETWEEN ? AND ?";
+            String sql = "SELECT * FROM vehicles WHERE make = ? AND model = ?";
 
             try (Connection connection = dataSource.getConnection();
                  PreparedStatement statement = connection.prepareStatement(sql)) {
-                statement.setDouble(1, minPrice);
-                statement.setDouble(2, maxPrice);
+                statement.setString(1, make);
+                statement.setString(2, model);
                 try (ResultSet resultSet = statement.executeQuery()) {
                     while (resultSet.next()) {
                         vehicles.add(createVehicleFromResultSet(resultSet));
@@ -65,15 +88,10 @@ public class VehicleDao {
                 e.printStackTrace();
             }
 
-            return vehicles.isEmpty() ? new ArrayList<>() : vehicles; // Skeleton'daki "return new ArrayList<>()" mantığı korundu
+            return vehicles;
         }
 
 
-
-    public List<Vehicle> searchByMakeModel(String make, String model) {
-        // TODO: Implement the logic to search vehicles by make and model
-        return new ArrayList<>();
-    }
 
     public List<Vehicle> searchByYearRange(int minYear, int maxYear) {
         // TODO: Implement the logic to search vehicles by year range
