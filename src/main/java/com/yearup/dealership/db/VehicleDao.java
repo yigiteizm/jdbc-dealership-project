@@ -94,9 +94,27 @@ public class VehicleDao {
 
 
     public List<Vehicle> searchByYearRange(int minYear, int maxYear) {
-        // TODO: Implement the logic to search vehicles by year range
-        return new ArrayList<>();
-    }
+
+            List<Vehicle> vehicles = new ArrayList<>();
+            String sql = "SELECT * FROM vehicles WHERE year BETWEEN ? AND ?";
+
+            try (Connection connection = dataSource.getConnection();
+                 PreparedStatement statement = connection.prepareStatement(sql)) {
+                statement.setInt(1, minYear);
+                statement.setInt(2, maxYear);
+                try (ResultSet resultSet = statement.executeQuery()) {
+                    while (resultSet.next()) {
+                        vehicles.add(createVehicleFromResultSet(resultSet));
+                    }
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            return vehicles;
+        }
+
+    
 
     public List<Vehicle> searchByColor(String color) {
         // TODO: Implement the logic to search vehicles by color
