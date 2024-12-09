@@ -177,7 +177,7 @@ public class VehicleDao {
             return vehicles;
         }
 
-    
+
 
     private Vehicle createVehicleFromResultSet(ResultSet resultSet) throws SQLException {
         Vehicle vehicle = new Vehicle();
