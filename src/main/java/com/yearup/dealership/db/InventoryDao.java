@@ -18,11 +18,10 @@ public class InventoryDao {
 
             try (Connection connection = dataSource.getConnection();
                  PreparedStatement statement = connection.prepareStatement(sql)) {
-                // Dealership ID ve VIN değerlerini ayarla
                 statement.setInt(1, dealershipId);
                 statement.setString(2, vin);
 
-                // SQL sorgusunu çalıştır
+
                 statement.executeUpdate();
                 System.out.println("Vehicle with VIN " + vin + " added to dealership ID " + dealershipId);
             } catch (SQLException e) {
@@ -32,6 +31,21 @@ public class InventoryDao {
 
 
     public void removeVehicleFromInventory(String vin) {
-        // TODO: Implement the logic to remove a vehicle from the inventory
+
+            String sql = "DELETE FROM inventory WHERE VIN = ?";
+
+            try (Connection connection = dataSource.getConnection();
+                 PreparedStatement statement = connection.prepareStatement(sql)) {
+
+                statement.setString(1, vin);
+
+
+                statement.executeUpdate();
+                System.out.println("Vehicle with VIN " + vin + " removed from inventory.");
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
     }
-}
+
