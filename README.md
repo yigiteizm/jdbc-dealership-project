@@ -21,8 +21,8 @@ The application connects to a MySQL database for secure and reliable data storag
 ---
 
 ## Setup
-Instructions on how to set up and run the project using IntelliJ IDEA.
-Instructions on how to set up and run the project using MySQL.
+- Instructions on how to set up and run the project using IntelliJ IDEA.
+- Instructions on how to set up and run the project using MySQL.
 
 
 ### Prerequisites
@@ -71,6 +71,8 @@ Instructions on how to set up and run the project using MySQL.
 
 - **Community Support:**
     - [Stack Overflow - Java](https://stackoverflow.com/questions/tagged/java)
+
+---
 
 
 ## Team Members
